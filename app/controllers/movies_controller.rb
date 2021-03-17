@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  @selected_ratings = []
 
   def show
     id = params[:id] # retrieve movie ID from URI route
@@ -7,7 +8,8 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @movies = Movie.filter_by_ratings(selected_ratings)
+    
   end
 
   def new
@@ -23,7 +25,7 @@ class MoviesController < ApplicationController
   def edit
     @movie = Movie.find params[:id]
   end
-
+  
   def update
     @movie = Movie.find params[:id]
     @movie.update_attributes!(movie_params)
